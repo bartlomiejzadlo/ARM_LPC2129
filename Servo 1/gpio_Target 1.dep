@@ -1,0 +1,19 @@
+Dependencies for Project 'gpio', Target 'Target 1': (DO NOT MODIFY !)
+F (.\Startup.s)(0x51C80D6E)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x62A8A64E)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\serwo\Serwo\Servo 1\led.h)(0x629B2131)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\serwo\Serwo\Servo 1\keyboard.h)(0x6293A567)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\serwo\Serwo\Servo 1\timer_interrupts.h)(0x629F789E)
+F (.\led.c)(0x629B2125)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\led.o --omf_browse .\led.crf --depend .\led.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\serwo\Serwo\Servo 1\led.h)(0x629B2131)
+F (.\keyboard.c)(0x629B2125)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\keyboard.o --omf_browse .\keyboard.crf --depend .\keyboard.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\serwo\Serwo\Servo 1\keyboard.h)(0x6293A567)
+F (.\timer.c)(0x629EFDFC)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\timer.o --omf_browse .\timer.crf --depend .\timer.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\serwo\Serwo\Servo 1\timer.h)(0x629CC8A5)
+F (.\timer_interrupts.c)(0x629F78F5)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\timer_interrupts.o --omf_browse .\timer_interrupts.crf --depend .\timer_interrupts.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\serwo\Serwo\Servo 1\timer_interrupts.h)(0x629F789E)
