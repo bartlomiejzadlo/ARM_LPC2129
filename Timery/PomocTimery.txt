@@ -1,0 +1,167 @@
+Timer zlicza impulsy podawane na wejście.
+Źródło taktowań Timera = zegar peryferiów PCLK.
+Częstotliwość zegara PCLK = 1/4 częstotliwości taktowania rdzenia procesora (1/4*60=15MHz)
+
+Komunikacja z Timerami - za pomocą rejestrów:
+Rejestr TC (Timer Counter) - reprezentuje bieżący stan Timera (aktaulnie zliczoną liczbę)
+Rejestr TCR (Timer Control Register) posiada bity służace do:
+-włączania/wyłączania Timera (Counter Enable)
+-zerowania Timera (Counter Reset)
+
+
+7.2
+
+Stworzyć funkcję InitTimer0(void), której jedynym zadaniem będzie włączenie Timera0:
+
+W rejestrze TCR należy odpowiednio ustawić bit CounterEnable.
+Kiedy bit ma wartość logiczną 1, timer zostaje włączony,
+Kiedy bit ma wartość logiczną 0, timer zostaje wyłączony.
+Bit Counter Enable znajduje się na miejsciu zerowym rejestru TCR.
+Toteż:
+#define mCOUNTER_ENABLE = (1<<0) [ustawienie jedynki w miejscu zerowego bita] [jedynka przesunieta na miejsce zerowe, spowoduje włączenie Timera]
+Teraz:
+T0TCR = T0TCR | mCOUNTER_ENABLE <-> T0TCR|=mCOUNTER_ENABLE
+[w rejestrze TCR ustawiamy jedynkę na miejscu bita nr 0, nie zmieniając przy tym wartości logicznych innych bitów (zachowanie poprzedniego stanu rejestru)]
+Tym samym włączamy licznik = uruchamiamy Timer.
+
+
+Stworzyć funkcję WaitOnTimer0(unsigned int uiTime), która:
+a)zresetuje Timer0
+b)poczeka do momentu osiągnięcia przez Timer0 wartości podanej w argumencie wywołania funkcji.
+
+a)
+W rejestrze TCR należy odpowiednio ustawić bit Counter Reset.
+Kiedy bit ma wartość logiczną 1, timer zostaje zresetowany (liczniki pozostaną wyzerowane) aż do momentu ustawienia na nim wartości 0.
+
+Bit Counter Reset znajduje się na pierwszym miejscu w rejestrze TCR.
+Zatem:
+#define mCOUNTER_RESET = (1<<1) [ustawienei jedynki w miejscu pierwszego bitu] [jedynka przesunięta na pierwsze miejsce, spowoduje zresetowanie Timera]
+Teraz:
+T0TCR = T0TCR | mCOUNTER_RESET <-> T0TCR|=mCOUNTER_RESET
+[w rejestrze TCR ustawiamy jedynkę na miejscu bitu nr 1, nie zmieniając przy tym wartości logicznych innych bitów (zachowanie poprzedniego stanu rejestru)]
+Tym samym zerujemy licznik = resetujemy Timer.
+
+Gdy już wyzerowaliśmy licznik (zresetowaliśmy Timer), a bit nr 1 ma wartosc logiczna 1, musimy na nowo przywrocic mu wartosc logiczna 0, aby licznik przestał być zerowany, i zaczął liczyć na nowo
+(nasz licznik jest nadal cały czas włączony (nigdy go nie wyłączaliśmy) -> tzn. cały czas liczy, jednak logiczna jedynka na bicie nr 1 zeruje go, i nie pozwala liczyć na nowo, dopóki z powrotem nie otrzyma wartości 0)
+w tym celu, w rejestrze TCR musimy ustawić w miejsu bitu Counter Reset ponownie 0 [Oczywiście nie zmieniając przy tym poprzednego stanu bitów rejestru!!!]:
+Funkcję taką zapewni nam operacja:
+T0TCR&=~mCOUNTER_RESET <-> T0TCR = T0TCR&(~(mCOUNTER_RESET))
+[w rejestrze TCR ustawiamy zero na miejscu bitu nr 1, nie zmieniając przy tym wartości logicznych innych bitów (zachowanie poprzedniego stanu rejestru)]
+
+b)
+Rejestr TC (Timer Counter) - reprezentuje bieżący stan Timera (aktualnie zliczoną liczbę poprzez Timer)
+
+Przy włączonym Timerze, rejestr TC będzie zwiększał się do wartości 0xFFFFFFFF a potem znów wracał do wartości wyjściowej 0x00000000, chyba, że zostanie zresetowany przed osiągnięciem owej wartości (0xFFFFFFFF).
+To działanie nie wprowadza opóźnienia.
+
+Zatem potrzebna nam będzie operacja:
+
+(uiTime*15)>= T0TC{}
+
+która polega na poczekaniu do momentu osiągnięcia przez Timer0 wartości podanej w argumencie wywołania funkcji.
+czekamy, aż rejestr TC osiągnie zadaną wartość.
+W T0TC zapisany jest czas od ostatniego zresetowania Timera -> gdy osiągnie wymaganą przez nas wartość (uiTime*15) pętla zakończy się
+
+Po wrzuceniu funkcji do nieskonczonej petli while w mainie, otrzymujemy stałe opóźnienie.
+
+
+7.3
+
+Jeżeli chcemy żeby licznik automatycznie resetował się po osiągnięciu pewnej wartości, należy tę wartość
+wpisać do rejestru porównującego (MR0 – Match Register 0) oraz ustawić bit „Reset on MR0” w rejestrze Match
+Control Register - MCR.
+
+Jeżeli chcemy żeby osiągniecie przez licznik określonej wartości powodowało ustawienie flagi przerwania, należy tę wartość
+wpisać do rejestru porównującego (MR0 – Match Register 0) oraz ustawić bit „Interrupt on MR0” w rejestrze Match
+Control Register - MCR.
+
+Rejestr Match Control Register:
+posiada dwa interesujące nas bity:
+
+Bit 0 -> odpowiadający za przerwanie w rejestrze MR0
+Kiedy bit 0 ma wartość logiczną 1, flaga przerwania jest ustawiona
+Kiedy bit 0 ma wartość logiczną 0, flaga przerwania jest wyłączona
+
+Zatem:
+#define mMR0_INTERRUPT_FLAG (1<<0)
+[przesunie jedynkę na miejsce bitu nr 0] [spowoduje ustawienie flagi przerwania]
+
+Bit 1 -> odpowiadający za reset w rejestrze MR0
+Kiedy bit 1 ma wartość logiczną 1, Timer zostanie zresetowany
+Kiedy bit 1 ma wartość logiczną 0, ta funkcja jest wyłączona
+
+Zatem:
+#define mMR0_INTERRUPT_RESET (1<<1)
+[przesunie jedynkę na miejsce bitu nr 1] [spowoduje zresetowanie Timera]
+
+Sytuacje te mają sens <-> gdy do rejestru porównującego MR0 zostaje wpisana interesująca nas wartość!
+
+
+Stworzyć funkcję:
+InitTimer0Match0(unsigned int iDelayTime), 
+której zadaniem będzie:
+a) ustawienie układu porównującego w sposób podany w przykładzie powyżej (czas w mikrosekundach),
+b) wyzerowanie oraz włączenie Timera0.
+
+Aby ustawić nasz układ porównujący wpierw musimy do rejestru porównującego MR0 wpisać interesującą nas wartość:
+T0MR0=uiDelayTime*15;
+
+Teraz musimy zresetować nasz Timer, a następnie go uruchomić (w poprzednim zadaniu uruchomienie Timera odbywało się na samym początku (tj. przed pętlą While, tutaj w środku, bo tak wymaga specyfikacja))
+Posłużymy się już znanym nam metodom:
+T0TCR|=mCOUNTER_RESET //reset
+T0TCR&=~mCOUNTER_RESET //ustawienie 0 na nowo
+T0TCR|=mCOUNTER_ENABLE //wlaczenie Timera
+
+Teraz do rejestru MCR należy wpisać jedynki w określone miejsca, aby spełniły swoje zadania:
+T0MCR = T0MCR | mMR0_INTERRUPT_FLAG <-> T0MCR|=mMR0_INTERRUPT_FLAG (wpisanie jedynki w miejsce bitu nr 0, w celu ustawienia flagi przerwania)
+T0MCR = T0MCR | mMR0_INTERRUPT_RESET <-> T0MCR|=mMR0_INTERRUPT_RESET (wpisanie jedynki w miejsce bitu nr 1, w celu zresetowania timera)
+Komendy te zadziałają tylko wtedy, gdy TC = MR0, tzn. gdy licznik osiągnie wartość, którą wpisaliśmy do rejestru porównującego.
+
+
+Stworzyć funkcję:
+WaitOnTimer0Match0(), 
+której zadaniem będzie:
+a) oczekiwanie na osiągnięcie przez Timer0 odpowiedniej wartości, czyli na ustawienie flagi przerwania
+przez układu porównujący,
+b) wyzerowanie flagi przerwania.
+
+
+
+Zapisanie logicznej jedynki do odpowiedniego bitu rejestru IR ZRESETUJE przerwanie. 
+Zapisanie zera nie ma żadnego efektu (przerwanie istnieje -> flaga przerwania jest usawiona)
+
+Za flagę przerwania w rejestrze IR odpowiada bit nr 0.
+Kiedy bit ma wartość logiczną 0, nie daje to żadnego efektu -> flaga przerwania jest ustawiona
+Kiedy bit ma wartość logiczną 1, resetuje przerwanie 
+
+Oraz wiemy, że:
+mMR0_INTERRUPT_FLAG = 0001
+
+Zatem operacja:
+
+T0IR & mMR0_INTERRUPT_FLAG == 0
+
+Będzie prawdziwa <=> gdy T0IR ma na miejscu bitu 0 logiczne 0,
+tzn. ustawiona zostaje flaga przerwania w rejestrze IR
+
+A więc działanie to, sprawia, że czekamy na ustawienie flagi przerwania w rejestrze IR.
+
+
+Aby "wyzerować" flagę przerwania, należy po prostu zresetować przerwanie tj. wpisać bitowi nr 0 rejestru IR logiczną 1
+Możemy to zrobić za pomocą operacji:
+T0IR=mMR0_INTERRUPT_FLAG
+(nw czy nie powinno być T0IR|=mMR0_INTERRUPT_FLAG, zeby zachowac stan bitow w IR)
+
+KONIEC
+WYSLIJCIE 5 ZL
+737 994 734
+
+czyli w zasadzie nasz reset to taki stop, tyle ze z wyzerowaniem
+
+
+
+
+
+
+
+
