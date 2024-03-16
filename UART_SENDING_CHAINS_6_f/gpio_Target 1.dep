@@ -1,0 +1,36 @@
+Dependencies for Project 'gpio', Target 'Target 1': (DO NOT MODIFY !)
+F (.\Startup.s)(0x65E0C5B3)(--cpu ARM7TDMI --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x65F0476B)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\uart.h)(0x65EB271F)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\string.h)(0x65EB2735)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\command_decoder.h)(0x65F0382D)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\watch.h)(0x65EB274F)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\timer_interrupts.h)(0x65F04449)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\servo.h)(0x65F0421D)
+F (.\led.c)(0x629B2125)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\led.o --omf_browse .\led.crf --depend .\led.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\led.h)(0x629B2131)
+F (.\keyboard.c)(0x629B2125)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\keyboard.o --omf_browse .\keyboard.crf --depend .\keyboard.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\keyboard.h)(0x6293A567)
+F (.\timer_interrupts.c)(0x65F0469F)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\timer_interrupts.o --omf_browse .\timer_interrupts.crf --depend .\timer_interrupts.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\timer_interrupts.h)(0x65F04449)
+F (.\servo.c)(0x65F046A4)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\servo.o --omf_browse .\servo.crf --depend .\servo.d)
+I (C:\Keil\ARM\Inc\Philips\LPC21xx.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\servo.h)(0x65F0421D)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\led.h)(0x629B2131)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\timer_interrupts.h)(0x65F04449)
+F (.\uart.c)(0x65F046A5)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\uart.o --omf_browse .\uart.crf --depend .\uart.d)
+I (C:\Keil\ARM\Inc\Philips\LPC210X.H)(0x51C80D9C)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\uart.h)(0x65EB271F)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\string.h)(0x65EB2735)
+F (.\string.c)(0x65EA3D6A)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\string.o --omf_browse .\string.crf --depend .\string.d)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\string.h)(0x65EB2735)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\uart.h)(0x65EB271F)
+F (.\command_decoder.c)(0x65F0382F)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\command_decoder.o --omf_browse .\command_decoder.crf --depend .\command_decoder.d)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\uart.h)(0x65EB271F)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\command_decoder.h)(0x65F0382D)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\string.h)(0x65EB2735)
+F (.\watch.c)(0x65EB025F)(-c --cpu ARM7TDMI -D__EVAL -g -O0 --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Philips-o .\watch.o --omf_browse .\watch.crf --depend .\watch.d)
+I (D:\smieci_z_pulpitu\smieci\ppswww_git\UART_SENDING_CHAINS\UART_SENDING_CHAINS_6_f\watch.h)(0x65EB274F)
